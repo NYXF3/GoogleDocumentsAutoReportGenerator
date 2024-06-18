@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Generatore di Rapporti</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 2rem;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 400px;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, textarea {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      width: calc(100% - 1rem); /* Adjust width */
+    }
+    textarea {
+      resize: vertical;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 1rem;
+      padding: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      white-space: pre-wrap; /* Preserve line breaks */
+    }
+    .error {
+      color: red;
+      font-weight: bold;
+    }
+    /* Added CSS for footer */
+    .footer {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 12px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Generatore di Rapporti (Google Documenti)</h1>
+  <form id="reportForm">
+    <label for="giorno">Giorno:</label>
+    <input type="text" id="giorno" name="giorno" required>
+    <label for="comune">Comune:</label>
+    <input type="text" id="comune" name="comune" required>
+    <label for="ore">Ore:</label>
+    <input type="text" id="ore" name="ore" required>
+    <label for="operatori">Operatori:</label>
+    <input type="text" id="operatori" name="operatori" required>
+    <label for="report">Report:</label>
+    <textarea id="report" name="report" rows="4" required></textarea>
+    <button type="button" onclick="generateReport()">Genera Rapporto</button>
+  </form>
+  <div id="output"></div>
+
+  <!-- Footer section -->
+  <div class="footer">
+    Creato da: y0uss<br>
+    Se vuoi aiuto contattami via email: youssefbakri311@gmail.com
+  </div>
+
+  <script>
+    function generateReport() {
+      var giorno = document.getElementById("giorno").value;
+      var comune = document.getElementById("comune").value;
+      var ore = document.getElementById("ore").value;
+      var operatori = document.getElementById("operatori").value;
+      var report = document.getElementById("report").value;
+
+      document.getElementById('output').textContent = "Generazione del report in corso...";
+
+      // Preparare l'oggetto formData
+      var formData = {
+        giorno: giorno,
+        comune: comune,
+        ore: ore,
+        operatori: operatori,
+        report: report
+      };
+
+      // Chiamare la funzione lato server per creare il rapporto
+      google.script.run.withSuccessHandler(function(response) {
+        // Aggiornare la risposta con il messaggio personalizzato
+        var updatedResponse = "Rapporto generato con successo! (lo troverai nei Google Documenti)";
+        document.getElementById('output').textContent = updatedResponse;
+      }).withFailureHandler(function(error) {
+        console.error('Errore durante l\'operazione:', error);
+        document.getElementById('output').textContent = "Si è verificato un errore. Controlla la console per i dettagli.";
+      }).createReport(formData);
+    }
+  </script>
+</body>
+</html>
