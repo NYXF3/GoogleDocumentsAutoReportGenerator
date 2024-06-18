@@ -1,0 +1,41 @@
+Overview
+This tutorial will guide you through creating a web form where users can input data to generate a report using Google Apps Script. The report will be created as a Google Document.
+
+Steps:
+
+1. Set Up Google Apps Script (GAS)
+Create a New Google Apps Script:
+
+Go to Google Apps Script and create a new project.
+Name your project and save it.
+Write the Google Apps Script Code:
+
+Replace the default with the JavaScript code from the repository
+
+Deploy the Script as Web App:
+
+From the script editor, go to Publish > Deploy as web app.
+Set security level to "Anyone, even anonymous" (or your preferred level).
+Click "Deploy" and authorize the permissions.
+Copy the Script URL:
+
+Create a new HTML file on your local machine or any HTML editor.
+Write the HTML Code:
+
+Replace the HTML content with the .html code from the repository
+3. Testing and Usage
+Testing:
+
+Save the HTML file.
+Open the HTML file in a web browser to test the report generation functionality.
+Ensure all inputs are filled correctly before clicking the "Genera Rapporto" button.
+Usage:
+
+Users can fill out the form fields with relevant information (e.g., Giorno, Comune, Ore, Operatori, Report).
+Clicking the "Genera Rapporto" button triggers the report generation process.
+A loading spinner will be displayed while the report is being generated.
+Upon completion, the success message ("Rapporto generato con successo! (lo troverai nei Google Documenti.)") will be shown.
+
+Conclusion
+
+This tutorial provides a step-by-step guide to creating a report generator web application using Google Apps Script and HTML. It covers setting up the server-side script, designing the HTML form, integrating a loading spinner for visual feedback, and handling both success and error scenarios effectively. Customize the design and functionality further to fit specific requirements or preferences.
