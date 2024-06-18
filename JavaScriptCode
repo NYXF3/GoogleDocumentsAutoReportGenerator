@@ -1,0 +1,51 @@
+function doGet() {
+  return HtmlService.createHtmlOutputFromFile('index')
+    .setTitle('Generatore di Rapporti')
+    .setSandboxMode(HtmlService.SandboxMode.IFRAME);
+}
+
+function createReport(formData) {
+  try {
+    // Estrarre i dati dall'oggetto formData
+    var giorno = formData.giorno;
+    var comune = formData.comune;
+    var ore = formData.ore;
+    var operatori = formData.operatori;
+    var report = formData.report;
+
+    // Ottenere la data e l'ora corrente
+    var now = new Date();
+    var timeString = now.toLocaleTimeString('it-IT');
+
+    // Creare un nuovo documento Google con il titolo specificato
+    var docTitle = 'Il rapporto di ' + timeString;
+    var doc = DocumentApp.create(docTitle);
+    var body = doc.getBody();
+
+    // Creare una tabella con 2 righe (intestazione e dati) e 5 colonne
+    var table = body.appendTable();
+    var headers = ['Giorno', 'Comune', 'Ore', 'Operatori', 'Report'];
+
+    // Righe dell'intestazione
+    var headersRow = table.appendTableRow();
+    for (var i = 0; i < headers.length; i++) {
+      headersRow.appendTableCell(headers[i]);
+    }
+
+    // Righe dei dati
+    var dataRow = table.appendTableRow();
+    var data = [giorno, comune, ore, operatori, report];
+    for (var j = 0; j < data.length; j++) {
+      dataRow.appendTableCell(data[j]);
+    }
+
+    // Ottenere l'URL del documento creato
+    var docUrl = doc.getUrl();
+    Logger.log('Documento creato con URL: ' + docUrl);
+    
+    return "Rapporto generato con successo! URL del documento: " + docUrl;
+  } catch (error) {
+    Logger.log("Errore durante la creazione del rapporto: " + error.toString());
+    return "Si è verificato un errore durante la creazione del rapporto.";
+  }
+}
